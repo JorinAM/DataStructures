@@ -10,7 +10,7 @@ export class LinkedList<T> {
     // insert at the beginning of the list 
     public addFirst(data: T): Node<T> {
         if (this.first == null) {
-            this.first= new Node<T>(data);
+            this.first = new Node<T>(data);
             return this.first;
         } else {
             // create new node

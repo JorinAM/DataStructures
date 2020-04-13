@@ -8,7 +8,6 @@ for(let i = 0; i < 10; i++) {
 
 printList(list);
 
-
 function printList(list: LinkedList<any>): void {
     let currentNode = list.getFirst();
 
