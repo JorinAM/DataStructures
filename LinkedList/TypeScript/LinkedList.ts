@@ -57,6 +57,28 @@ export class LinkedList<T> {
         return this.last;
     }
 
+    // remove the first node in the list
+    public removeFirst(): Node<T>{
+        // we are only intrested when the list has at least one node, otherwise return return this.first which is null
+        if(this.first !== null) {
+            // use a temporary node that points to the node which will be removed
+            const tempNode: Node<T> = this.first;
+
+            // move first to the next node in the list
+            this.first = this.first.getNext();
+
+            // when first === null, this means that there was only one node left at the time removeFirst was invoked
+            if(this.first === null) {
+                this.last = null;
+            }
+
+            // unlink the first node from the rest of the list
+            tempNode.setNext(null);
+        } 
+
+        return this.first;
+    }
+
     // return the first node in the list
     public getFirst(): Node<T> {
         return this.first;
