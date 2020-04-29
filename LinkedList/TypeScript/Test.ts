@@ -9,33 +9,69 @@ function printList(list: LinkedList<any>): void {
     }
 }
 
-function runTest(testName: string, test: Function): void {
-    const list: LinkedList<number> = new LinkedList<number>();
-    test(list);
+function runTest(testName: string, test: () => boolean): void {
+    const isPass: boolean = test();
+    console.log(`Test Case: ${testName}, Passing: ${isPass}`);
 }
 
-function loopMethod(iterations: number, methodName: string, list: LinkedList<any>): void {
+function loopMethod(iterations: number, methodToLoop: (iteration?: number) => void): void {
     for(let i = 0; i < iterations; i++) {
-        try {
-            list[methodName](i);
-        } catch {
-            throw new Error(`${methodName} does not exist`);
-        }
+        methodToLoop(i);
     }
 }
 
-runTest("setFirst", (list: LinkedList<any>): void => {
-    loopMethod(15, "setFirst", list);
-    printList(list);
+runTest("setFirst", (): boolean => {
+    const list: LinkedList<number> = new LinkedList<number>();
+
+    loopMethod(15, (iteration) => {
+        list.setFirst(iteration);
+    });
+
+    const result: boolean = list.getFirst().getData() === 14;
+
+    return result;
 });
 
-runTest("setLast", (list: LinkedList<any>): void => {
-    loopMethod(10, "setLast", list);
-    printList(list);
+runTest("setLast", (): boolean => {
+    const list: LinkedList<number> = new LinkedList<number>();
+
+    loopMethod(10, (iteration) => {
+        list.setLast(iteration);
+    })
+
+    const result: boolean = list.getLast().getData() === 9;
+
+    return result;
 });
 
-runTest("removeFirst", (list: LinkedList<any>): void => {
-    loopMethod(10, "setFirst", list);
-    loopMethod(5, "removeFirst", list);
-    printList(list);
+runTest("removeFirst", (): boolean => {
+    const list: LinkedList<number> = new LinkedList<number>();
+
+    loopMethod(10, (iteration) => {
+        list.setFirst(iteration);
+    });
+
+    loopMethod(5, () => {
+        list.removeFirst();
+    });
+
+    const result: boolean = list.getFirst().getData() === 4;
+
+    return result;
+});
+
+runTest("removeLast", (): boolean => {
+    const list: LinkedList<number> = new LinkedList<number>();
+    
+    loopMethod(20, (iteration) => {
+        list.setFirst(iteration);
+    });
+
+    loopMethod(19, (iteration) => {
+        list.removeLast();
+    });
+
+    const result: boolean = list.getLast().getData() === 19;
+
+    return result;
 });
